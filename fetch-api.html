@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>useEffect – Fetch API Example</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #0d1117;
+        color: #c9d1d9;
+        font-family: "Courier New", monospace;
+        padding: 2rem;
+      }
+      pre {
+        background-color: #161b22;
+        border-radius: 8px;
+        padding: 1rem;
+        font-size: 1rem;
+        overflow-x: auto;
+        line-height: 0.5;
+      }
+      .line {
+        display: block;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+        margin-bottom: 2px;
+      }
+      .visible {
+        opacity: 1;
+      }
+      .highlight::before {
+        content: "➤";
+        color: #39ff14;
+        margin-right: 8px;
+        font-weight: bold;
+      }
+      .comment {
+        color: #8b949e;
+      }
+      .keyword {
+        color: #ff7b72;
+      }
+      .variable {
+        color: #79c0ff;
+      }
+      .string {
+        color: #a5d6ff;
+      }
+      .function {
+        color: #d2a8ff;
+      }
+      .tag {
+        color: #7ee787;
+      }
+      .bracket {
+        color: #c9d1d9;
+      }
+      .popup {
+        background-color: #1c1c1c;
+        border: 1px solid #ffd700;
+        padding: 0.6rem 1rem;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: 12px;
+        max-width: 480px;
+        z-index: 10;
+        color: #ffeb99;
+        text-shadow: 0 0 4px rgba(255, 223, 100, 0.6);
+      }
+      .word {
+        display: inline-block;
+        transition: border-bottom 0.2s ease;
+        padding: 0 2px;
+      }
+      .word.underline {
+        border-bottom: 2px solid #ffd700;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🌐 useEffect Fetch API Demo</h2>
+
+    <div class="note-box mb-3">
+      ❓ <strong>Question:</strong> How do we fetch data using
+      <code>useEffect</code>?
+      <button class="btn btn-warning ms-2" onclick="speakDefinition()">
+        💬 Read Definition
+      </button>
+      <button class="btn btn-success ms-3" id="startVoice">
+        ▶️ Start Coding
+      </button>
+      <button class="btn btn-info ms-3" id="showImageButton">
+        🖼 Show Image Output
+      </button>
+    </div>
+    <table> <tr><td> <img id="userImage" src="userlist.JPG" alt="User List Example" /></td><td> <img id="json" src="json.JPG" alt="User List Example" /></td></tr></table>
+   
+   
+    <pre id="codeBlock"><code>
+      <span class="line" id="line0"><span class="keyword">import</span> <span class="variable">React</span>, <span class="bracket">&#123;</span><span class="variable">useState</span>, <span class="variable">useEffect</span><span class="bracket">&#125;</span> <span class="keyword">from</span> <span class="string">'react'</span>;</span>
+      <span class="line" id="line1"><span class="keyword">function</span> <span class="function">UserList</span>() <span class="bracket">&#123;</span></span>
+      <span class="line" id="line2">  <span class="keyword">const</span> [<span class="variable">users</span>, <span class="variable">setUsers</span>] = <span class="function">useState</span>([]);</span>
+      <span class="line" id="line3">  <span class="function">useEffect</span>(() => <span class="bracket">&#123;</span></span>
+      <span class="line" id="line4">    <span class="function">fetch</span>(<span class="string">'https://jsonplaceholder.typicode.com/users'</span>)</span>
+      <span class="line" id="line5">      .<span class="function">then</span>(<span class="variable">res</span> => <span class="variable">res</span>.<span class="function">json</span>())</span>
+      <span class="line" id="line6">      .<span class="function">then</span>(<span class="variable">data</span> => <span class="variable">setUsers</span>(<span class="variable">data</span>));</span>
+      <span class="line" id="line7">  <span class="bracket">&#125;</span>, []);</span>
+      <span class="line" id="line8">  <span class="keyword">return</span> (</span>
+      <span class="line" id="line9">    <span class="tag">&lt;div&gt;</span></span>
+      <span class="line" id="line10">      <span class="tag">&lt;h3&gt;</span>User List<span class="tag">&lt;/h3&gt;</span></span>
+      <span class="line" id="line11">      <span class="tag">&lt;ul&gt;</span></span>
+      <span class="line" id="line12">        &#123;<span class="variable">users</span>.<span class="function">map</span>(<span class="variable">user</span> => (</span>
+      <span class="line" id="line13">          <span class="tag">&lt;li key=</span>&#123;<span class="variable">user.id</span>&#125;<span class="tag">&gt;</span>&#123;<span class="variable">user.name</span>&#125;<span class="tag">&lt;/li&gt;</span></span>
+      <span class="line" id="line14">        ))&#125;</span>
+      <span class="line" id="line15">      <span class="tag">&lt;/ul&gt;</span></span>
+      <span class="line" id="line16">    <span class="tag">&lt;/div&gt;</span></span>
+      <span class="line" id="line17">  );</span>
+      <span class="line" id="line18"><span class="bracket">&#125;</span></span>
+      <span class="line" id="line19"><span class="keyword">export default</span> <span class="function">UserList</span>;</span>
+    </code></pre>
+
+    <script>
+      const steps = [
+        {
+          id: "line0",
+          text: "Alright, first thing’s first! We're bringing in React, because we need it to make everything work. Then, we’re grabbing two cool hooks — useState and useEffect. useState is like a memory box where we can store information (like a list of users). useEffect is a helper that runs some code for us, like fetching data from an API when our page first loads.",
+        },
+        {
+          id: "line1",
+          text: "Here, we’re creating a function called UserList, which is our little app that will show the list of users. It’s like saying, 'Hey, I want to make something that displays users.'",
+        },
+        {
+          id: "line2",
+          text: "We’re using useState here to make a special memory space called 'users'. It starts as an empty list, and later we’ll fill it up with real user data from the internet.",
+        },
+        {
+          id: "line3",
+          text: "This is where we tell React, 'Hey, after the component shows up on the screen, run this code to fetch some data.' That’s what useEffect helps us do.",
+        },
+        {
+          id: "line4",
+          text: "We’re calling fetch on a special web address that gives us user data. Think of it like sending a letter asking, 'Hey server, give me some users!'",
+        },
+        {
+          id: "line5",
+          text: "Once the server replies, we say, 'Cool, let’s turn this response into something useful — like JSON!' JSON is just a fancy format for data.",
+        },
+        {
+          id: "line6",
+          text: "Now that we have real user data, we save it into our memory box (users) using setUsers. This makes sure our app remembers and can show the data.",
+        },
+        {
+          id: "line7",
+          text: "This little empty array at the end of useEffect is super important! It means, 'Only run this fetching code once, right after the page loads.'",
+        },
+        {
+          id: "line8",
+          text: "Now it's time to show something on the screen! We return some JSX — that’s the code that looks like HTML but is powered by React.",
+        },
+        {
+          id: "line9",
+          text: "First, we make a wrapper div — it’s like a box that holds all the stuff we want to show.",
+        },
+        {
+          id: "line10",
+          text: "Inside the div, we add a heading. It tells the user what this section is about — something like 'List of Users'.",
+        },
+        {
+          id: "line11",
+          text: "Then, we create an unordered list — you know, the kind with bullet points — to show each user's name.",
+        },
+        {
+          id: "line12",
+          text: "We use map here to loop through every user in our data. It’s like saying, 'For every user, let’s do something!'",
+        },
+        {
+          id: "line13",
+          text: "Inside the loop, we return a list item — <li> — that shows the user's name. Simple and clean!",
+        },
+        {
+          id: "line14",
+          text: "Now we’re done with our loop, so we close the map function. Everything we wanted to show for each user is now ready.",
+        },
+        {
+          id: "line15",
+          text: "We close our unordered list here — that’s the </ul> tag, wrapping up the whole user list.",
+        },
+        {
+          id: "line16",
+          text: "Now we close our outer div — the container that holds everything together.",
+        },
+        {
+          id: "line17",
+          text: "With the return statement done, we’ve told React exactly what to show on the screen.",
+        },
+        {
+          id: "line18",
+          text: "We’re wrapping up the function now — the closing brace means 'That’s all for this component!'",
+        },
+        {
+          id: "line19",
+          text: "And finally, we export our component — this just means, 'Hey, this component is ready to be used somewhere else in our app!'",
+        },
+      ];
+
+      let current = 0;
+
+      function speakNextStep() {
+        if (current >= steps.length) return;
+        const { id, text } = steps[current];
+        const line = document.getElementById(id);
+        if (line) line.classList.add("visible");
+
+        setTimeout(() => {
+          document
+            .querySelectorAll(".line")
+            .forEach((l) => l.classList.remove("highlight"));
+          document.querySelectorAll(".popup").forEach((p) => p.remove());
+
+          line.classList.add("highlight");
+
+          // Create popup container
+          const popup = document.createElement("div");
+          popup.className = "popup";
+
+          // Wrap each word in a span
+          const words = text.trim().split(/\s+/);
+          popup.innerHTML = words
+            .map((word) => `<span class="word">${word} </span>`)
+            .join(" ");
+
+          document.body.appendChild(popup);
+
+          // Position it next to the line
+          const rect = line.getBoundingClientRect();
+          const scrollTop =
+            window.scrollY || document.documentElement.scrollTop;
+          const scrollLeft =
+            window.scrollX || document.documentElement.scrollLeft;
+
+          popup.style.position = "absolute";
+          popup.style.top = rect.top + scrollTop + "px";
+          popup.style.left = rect.left + scrollLeft + 650 + "px";
+          popup.style.maxWidth = "550px";
+
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.rate = 0.85;
+
+          // Highlight each word as it's spoken
+          let wordIndex = 0;
+          utter.onboundary = (event) => {
+            if (event.name === "word") {
+              const spans = popup.querySelectorAll(".word");
+              spans.forEach((s) => s.classList.remove("underline"));
+              if (spans[wordIndex]) {
+                spans[wordIndex].classList.add("underline");
+                wordIndex++;
+              }
+            }
+          };
+
+          utter.onend = () => {
+            current++;
+            speakNextStep();
+          };
+
+          speechSynthesis.speak(utter);
+        }, 500);
+      }
+
+      document.getElementById("startVoice").addEventListener("click", () => {
+        speakNextStep();
+      });
+
+      function toggleImage() {
+        const userImage = document.getElementById("userImage");
+        const showImageButton = document.getElementById("showImageButton");
+
+        // Toggle image visibility
+        if (userImage.style.display === "none") {
+          userImage.style.display = "block"; // Show the image
+          showImageButton.innerText = "🖼 Hide Image Output"; // Update button text
+          // Adjust image position below the button
+          userImage.style.top =
+            document.getElementById("showImageButton").getBoundingClientRect()
+              .bottom +
+            100 +
+            "px";
+        } else {
+          userImage.style.display = "none"; // Hide the image
+          showImageButton.innerText = "🖼 Show Image Output"; // Update button text
+        }
+
+        // Narration to explain image output visibility
+        const narration = new SpeechSynthesisUtterance(
+          "Here is the image output. and json data from link"
+        );
+        speechSynthesis.speak(narration);
+      }
+      document
+        .getElementById("showImageButton")
+        .addEventListener("click", toggleImage);
+    </script>
+  </body>
+</html>
